@@ -1757,7 +1757,7 @@ redwh_seekbar.setOnSeekBarChangeListener{
 wall.ButtonDrawable.setColorFilter(PorterDuffColorFilter(0x9AFFFFFF, PorterDuff.Mode.SRC_ATOP))
 function wall.OnCheckedChangeListener()
   if wall.checked then
-    HexPatches.MemoryPatch("libunity.so", 0x51EC608, "h1F 20 03 D5 E0 03 13 AA")
+    HexPatches.MemoryPatch("libunity.so", 0x548A67C, "h1F 20 03 D5 E0 03 13 AA")
     idkcstmToast("WALLHACK: ACTIVATED")
    else
   end
