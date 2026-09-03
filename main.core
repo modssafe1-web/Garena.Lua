@@ -1933,15 +1933,15 @@ end
 amo.ButtonDrawable.setColorFilter(PorterDuffColorFilter(0x9AFFFFFF, PorterDuff.Mode.SRC_ATOP))
 function amo.OnCheckedChangeListener()
   if amo.checked then
-    HexPatches.MemoryPatch("libunity.so", 0x6AAF660, "h00 00 80 52 C0 03 5F D6")
+    HexPatches.MemoryPatch("libunity.so", 0x50EC794, "h00 00 80 52 C0 03 5F D6")
     HexPatches.MemoryPatch("libunity.so", 0x5984C88, "h20 00 80 D2 C0 03 5F D6")
     HexPatches.MemoryPatch("libunity.so", 0x5984AC4, "h00 00 80 52 C0 03 5F D6")
     HexPatches.MemoryPatch("libunity.so", 0x5984C18, "h00 00 80 52 C0 03 5F D6")
     HexPatches.MemoryPatch("libunity.so", 0x50EC78C, "h00 00 80 52 C0 03 5F D6")
     HexPatches.MemoryPatch("libunity.so", 0x510CFB8, "h00 00 80 52 C0 03 5F D6")
     HexPatches.MemoryPatch("libunity.so", 0x5107904, "h20 00 80 D2 C0 03 5F D6")
-    HexPatches.MemoryPatch("libunity.so", 0x510D928, "h00 00 80 52 C0 03 5F D6")
-    HexPatches.MemoryPatch("libunity.so", 0xC14E078, "h20 00 80 D2 C0 03 5F D6")
+    HexPatches.MemoryPatch("libunity.so", 0xC14E078, "h00 00 80 52 C0 03 5F D6")
+    HexPatches.MemoryPatch("libunity.so", 0x510D928, "h20 00 80 D2 C0 03 5F D6")
     idkcstmToast ("1 COST AMMO :ACTIVATED ")
    else
   end
