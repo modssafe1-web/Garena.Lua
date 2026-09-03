@@ -1721,9 +1721,9 @@ ipad_seekbar.setOnSeekBarChangeListener{
     local hexValue = floatToHexLE(cameraVal)
 
     -- Tatlong magkakasunod na linya ng patch para sa GetCurrentWorldCameraFOV
-    HexPatches.MemoryPatch("libunity.so", 0x6A67B58, "h40 00 00 1C")
-    HexPatches.MemoryPatch("libunity.so", 0x6A67B58 + 4, "hC0 03 5F D6")
-    HexPatches.MemoryPatch("libunity.so", 0x6A67B58 + 8, hexValue, 4)
+    HexPatches.MemoryPatch("libunity.so", 0x6643848, "h40 00 00 1C")
+    HexPatches.MemoryPatch("libunity.so", 0x6643848 + 4, "hC0 03 5F D6")
+    HexPatches.MemoryPatch("libunity.so", 0x6643848 + 8, hexValue, 4)
 
     idkcstmToast("IPADVIEW: " .. progress .. "% APPLIED")
   end
