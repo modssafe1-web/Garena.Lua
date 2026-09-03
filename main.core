@@ -1693,12 +1693,9 @@ speed_seekbar.setOnSeekBarChangeListener{
     -- Patch Style: LDR S0, #8 | RET | [DATA]
     local finalPatch = "h40 h00 h00 h1C hC0 h03 h5F hD6 " .. hexValue
 
-    -- Patch sa mga Offsets mula sa dump mo
-    -- CalcMaxMoveSpeed
+    -- Patch sa 2 natitirang Offsets
+    -- GetWeaponMoveScale
     HexPatches.MemoryPatch("libunity.so", 0x51D2BE4, finalPatch)
-
-    -- GetMaxSpeed
-    HexPatches.MemoryPatch("libunity.so", 0xA38D688, finalPatch)
 
     -- CalcFinalMoveScale
     HexPatches.MemoryPatch("libunity.so", 0x51D2EB8, finalPatch)
