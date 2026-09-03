@@ -1590,7 +1590,7 @@ function floatmenu1.OnCheckedChangeListener()
     HexPatches.MemoryPatch("libanogs.so", 0x265A40, "hC0 03 5F D6", 32);
     HexPatches.MemoryPatch("libanogs.so", 0x2A55D4, "hC0 03 5F D6", 32);
     HexPatches.MemoryPatch("libanogs.so", 0x2A5634, "hC0 03 5F D6", 32);
-    idkcstmToast("Bypass Logo Activated")
+    idkcstmToast("Bypass Logo Activated1")
   end
 end
 
