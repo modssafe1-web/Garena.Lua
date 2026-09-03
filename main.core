@@ -1598,9 +1598,9 @@ aimbot_seekbar.setOnSeekBarChangeListener{
     HexPatches.MemoryPatch("libunity.so", 0x666FB88 + 8, hexValue, 4)
 
     -- Offset 2: Aim Assist Range/Power
-    HexPatches.MemoryPatch("libunity.so", 0x5161770, "h40 00 00 1C")
-    HexPatches.MemoryPatch("libunity.so", 0x5161770 + 4, "hC0 03 5F D6")
-    HexPatches.MemoryPatch("libunity.so", 0x5161770 + 8, hexValue, 4)
+    HexPatches.MemoryPatch("libunity.so", 0x666FD90, "h40 00 00 1C")
+    HexPatches.MemoryPatch("libunity.so", 0x666FD90 + 4, "hC0 03 5F D6")
+    HexPatches.MemoryPatch("libunity.so", 0x666FD90 + 8, hexValue, 4)
 
     idkcstmToast("AIMBOT: " .. progress .. "% APPLIED")
   end
