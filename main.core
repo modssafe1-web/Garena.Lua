@@ -1782,7 +1782,9 @@ function wall.OnCheckedChangeListener()
   if wall.checked then
     HexPatches.MemoryPatch("libunity.so", 0x548A67C, "h1F 20 03 D5 E0 03 13 AA")
     idkcstmToast("WALLHACK: ACTIVATED")
-   else
+else
+      HexPatches.MemoryPatch("libunity.so", 0x548A67C, "h80 00 00 36")
+      idkcstmToast("WALLHACK: DEACTIVATED")
   end
 end
 
