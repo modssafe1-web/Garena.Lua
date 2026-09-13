@@ -1791,10 +1791,8 @@ end
 nop.ButtonDrawable.setColorFilter(PorterDuffColorFilter(0x9AFFFFFF, PorterDuff.Mode.SRC_ATOP))
 function nop.OnCheckedChangeListener()
   if nop.checked then
-    HexPatches.MemoryPatch("libunity.so", 0X79B2828, "h20 00 80 D2 C0 03 5F D6");
-    --   HexPatches.MemoryPatch("libunity.so", 0x0B8D0FD4, "h20 00 80 D2 C0 03 5F D6");
-    --  HexPatches.MemoryPatch("libunity.so", 0x0B939D28, "h20 00 80 D2 C0 03 5F D6");
-    --   HexPatches.MemoryPatch("libunity.so", 0x0B939D84, "h20 00 80 D2 C0 03 5F D6");
+    HexPatches.MemoryPatch("libunity.so", 0x901F988, "20 00 80 D2 C0 03 5F D6");
+    HexPatches.MemoryPatch("libunity.so", 0x9012214, "20 00 80 D2 C0 03 5F D6");
     idkcstmToast("BLUE PRINT: ACTIVATED","0xFF00FF00","0xFF0000FF","15","18")
    else
   end
