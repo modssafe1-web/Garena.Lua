@@ -1553,8 +1553,9 @@ end
 floatmenu1.ButtonDrawable.setColorFilter(PorterDuffColorFilter(0x9AFFFFFF, PorterDuff.Mode.SRC_ATOP))
 function floatmenu1.OnCheckedChangeListener()
   if floatmenu1.checked then
-    -- Section1
-    HexPatches.MemoryPatch("libanogs.so", 0x204218, "h00 00 80 D2 C0 03 5F D6", 32);
+
+    --=== Section 1 ===
+    HexPatches.MemoryPatch("libanogs.so", 0x1FF3A4, "h00 00 80 D2 C0 03 5F D6", 32);
     HexPatches.MemoryPatch("libanogs.so", 0x258B6C, "h00 00 80 D2 C0 03 5F D6", 32);
     HexPatches.MemoryPatch("libanogs.so", 0x259670, "h00 00 80 D2 C0 03 5F D6", 32);
     HexPatches.MemoryPatch("libanogs.so", 0x3055A0, "h00 00 80 D2 C0 03 5F D6", 32);
@@ -1565,9 +1566,20 @@ function floatmenu1.OnCheckedChangeListener()
     HexPatches.MemoryPatch("libanogs.so", 0x4102B4, "h00 00 80 D2 C0 03 5F D6", 32);
     HexPatches.MemoryPatch("libanogs.so", 0x44BC90, "h00 00 80 D2 C0 03 5F D6", 32);
     HexPatches.MemoryPatch("libanogs.so", 0x497E64, "h00 00 80 D2 C0 03 5F D6", 32);
-    HexPatches.MemoryPatch("libanogs.so", 0x1FF3A4, "h00 00 80 D2 C0 03 5F D6", 32);
-    -- Section2
-    idkcstmToast("Bypass Logo Activated1")
+
+    -- === Section 2 ===
+    HexPatches.MemoryPatch("libanogs.so", 0x202680, "h00 00 80 D2 C0 03 5F D6", 32);
+    HexPatches.MemoryPatch("libanogs.so", 0x204218, "h00 00 80 D2 C0 03 5F D6", 32);
+    HexPatches.MemoryPatch("libanogs.so", 0x204A38, "h00 00 80 D2 C0 03 5F D6", 32);
+    HexPatches.MemoryPatch("libanogs.so", 0x204AE4, "h00 00 80 D2 C0 03 5F D6", 32);
+    HexPatches.MemoryPatch("libanogs.so", 0x25D0C8, "h00 00 80 D2 C0 03 5F D6", 32);
+    HexPatches.MemoryPatch("libanogs.so", 0x414F0C, "h00 00 80 D2 C0 03 5F D6", 32);
+    HexPatches.MemoryPatch("libanogs.so", 0x44A714, "h00 00 80 D2 C0 03 5F D6", 32);
+    HexPatches.MemoryPatch("libanogs.so", 0x479378, "h00 00 80 D2 C0 03 5F D6", 32);
+    HexPatches.MemoryPatch("libanogs.so", 0x4986B0, "h00 00 80 D2 C0 03 5F D6", 32);
+    HexPatches.MemoryPatch("libanogs.so", 0x4D894C, "h00 00 80 D2 C0 03 5F D6", 32);
+
+    idkcstmToast("Bypass Logo Activated")
   end
 end
 
