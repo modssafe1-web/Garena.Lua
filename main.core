@@ -1580,18 +1580,7 @@ function floatmenu1.OnCheckedChangeListener()
     HexPatches.MemoryPatch("libanogs.so", 0x4D894C, "h00 00 80 D2 C0 03 5F D6", 32);
    
 -- === Section 3 ===
-HexPatches.MemoryPatch("libanogs.so", 0x1F9AB4, "00 00 80 D2 C0 03 5F D6", 32);
-HexPatches.MemoryPatch("libanogs.so", 0x203184, "00 00 80 D2 C0 03 5F D6", 32);
-HexPatches.MemoryPatch("libanogs.so", 0x205854, "00 00 80 D2 C0 03 5F D6", 32);
-HexPatches.MemoryPatch("libanogs.so", 0x20A39C, "00 00 80 D2 C0 03 5F D6", 32);
-HexPatches.MemoryPatch("libanogs.so", 0x222DEC, "00 00 80 D2 C0 03 5F D6", 32);
-HexPatches.MemoryPatch("libanogs.so", 0x2351C8, "00 00 80 D2 C0 03 5F D6", 32);
-HexPatches.MemoryPatch("libanogs.so", 0x3075C4, "00 00 80 D2 C0 03 5F D6", 32);
-HexPatches.MemoryPatch("libanogs.so", 0x4ABD54, "00 00 80 D2 C0 03 5F D6", 32);
-HexPatches.MemoryPatch("libanogs.so", 0x4BDE78, "00 00 80 D2 C0 03 5F D6", 32);
-HexPatches.MemoryPatch("libanogs.so", 0x4E2204, "00 00 80 D2 C0 03 5F D6", 32);
-HexPatches.MemoryPatch("libanogs.so", 0x4FA774, "00 00 80 D2 C0 03 5F D6", 32);
-    idkcstmToast("Bypass Logo Activated1")
+    idkcstmToast("Bypass Logo Activated")
   end
 end
 
