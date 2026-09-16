@@ -309,7 +309,7 @@ local function showLoginUI()
   if window then
     window.setBackgroundDrawable(ColorDrawable(0x00000000))
     window.setDimAmount(0.65)
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE + WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+    window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE + WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
 
 
     local lp = window.getAttributes()
@@ -412,10 +412,10 @@ local function showLoginUI()
           showSuccess("Login Success | Valid: " .. dy .. "d " .. hr .. "h " .. mn .. "m")
 
           pref.edit().putString("saved_key", inputKey).apply()
-          
+
           -- MAGPADALA NG TELEGRAM NOTIFICATION
           sendToTelegram(inputKey, dy.."d "..hr.."h "..mn.."m")
-          
+
           -- SISIMULAN ANG BACKGROUND MONITORING PARA MAG-CRASH KAPAG LUMAMPAS SA EXPIRY TIME
           startKeyMonitor(expiryVal)
 
@@ -423,44 +423,44 @@ local function showLoginUI()
             if loginDialog then
               loginDialog.dismiss()
             end
-            
+
             -- PAG SUCCESSFUL ANG LOGIN, IPAPALABAS ANG CHEAT MENU/FLOAT
             if loadMainApp then
               loadMainApp()
             end
           end)
 
-        elseif statusVal == 1 or statusVal == 4 then
+         elseif statusVal == 1 or statusVal == 4 then
           resetLoginButton()
           showError("Key Not Found ! Invalid")
           shakeAnimation(userKey)
 
-        elseif statusVal == 2 then
+         elseif statusVal == 2 then
           resetLoginButton()
           showError("Key Already Used On Another Device")
           shakeAnimation(userKey)
 
-        elseif statusVal == 3 then
+         elseif statusVal == 3 then
           resetLoginButton()
           showError("Key Expired")
           shakeAnimation(userKey)
-          
+
           -- AGAD NA IPATCH AT I-CRASH KAPAG EXPIRED ANG KEY SAKALING PININOT PA RIN ANG LOGIN
           if applyExpiryCrashPatch then
             applyExpiryCrashPatch()
           end
 
-        elseif statusVal == 5 then
+         elseif statusVal == 5 then
           resetLoginButton()
           showError("Device Blocked")
           shakeAnimation(userKey)
 
-        else
+         else
           resetLoginButton()
           showError("Key Not Found ! Invalid")
           shakeAnimation(userKey)
         end
-      else
+       else
         resetLoginButton()
         showError("Connection Error ! Server Offline")
         shakeAnimation(userKey)
@@ -708,6 +708,68 @@ A3params1.width = WindowManager.LayoutParams.WRAP_CONTENT
 A3params1.height = WindowManager.LayoutParams.WRAP_CONTENT
 minWindow = loadlayout(icon)
 OpenM=false
+
+
+
+import "android.graphics.drawable.GradientDrawable"
+import "android.animation.ValueAnimator"
+import "android.graphics.Color"
+
+-- LOAD UI
+activity.setContentView(loadlayout(layout))
+
+--------------------------------------------------
+-- 🌈 RGB NEON BORDER PARA SA MGA TAB BOXES
+--------------------------------------------------
+local function createTabBorder()
+  local border = GradientDrawable()
+  border.setShape(GradientDrawable.RECTANGLE)
+  border.setColor(Color.parseColor("#FF1E1E1E")) -- Background ng tab box
+  border.setCornerRadius(6 * activity.getResources().getDisplayMetrics().density)
+  border.setStroke(3, Color.parseColor("#00FFFF"))
+  return border
+end
+
+-- Gumawa tayo ng borders para sa 5 tabs
+local tabBorders = { createTabBorder(), createTabBorder(), createTabBorder(), createTabBorder(), createTabBorder() }
+
+local tabViews = { tab1, tab2, tab3, tab4, tab5 }
+
+for i, view in ipairs(tabViews) do
+  if view ~= nil then
+    view.setBackground(tabBorders[i])
+  end
+end
+
+if Build.VERSION.SDK_INT >= 21 then
+  local colors = {
+    Color.parseColor("#00FFFF"), -- Cyan
+    Color.parseColor("#FF00FF"), -- Pink
+    Color.parseColor("#FFFFFF"), -- White
+    Color.parseColor("#00FF00"), -- Green
+    Color.parseColor("#FFD700"), -- Gold
+    Color.parseColor("#FF0000"), -- Red
+    Color.parseColor("#0000FF"), -- Blue
+    Color.parseColor("#00FFFF") -- Loop back
+  }
+
+  local rgbAnim = ValueAnimator.ofArgb(colors)
+  rgbAnim.setDuration(5000)
+  rgbAnim.setRepeatCount(ValueAnimator.INFINITE)
+
+  rgbAnim.addUpdateListener(ValueAnimator.AnimatorUpdateListener {
+    onAnimationUpdate = function(animation)
+      local color = animation.getAnimatedValue()
+      for _, border in ipairs(tabBorders) do
+        if border ~= nil then
+          border.setStroke(3, color) -- Iilaw at magpapalitan ng kulay ang mga box borders ng tabs
+        end
+      end
+    end
+  })
+  rgbAnim.start()
+end
+
 
 --------------------------------------------------
 -- NEON RGB GLOW ANIMATION PARA SA FLOATING ICON --
@@ -1578,14 +1640,11 @@ function floatmenu1.OnCheckedChangeListener()
     HexPatches.MemoryPatch("libanogs.so", 0x479378, "h00 00 80 D2 C0 03 5F D6", 32);
     HexPatches.MemoryPatch("libanogs.so", 0x4986B0, "h00 00 80 D2 C0 03 5F D6", 32);
     HexPatches.MemoryPatch("libanogs.so", 0x4D894C, "h00 00 80 D2 C0 03 5F D6", 32);
-   
--- === Section 3 ===
+
+    -- === Section 3 ===
     idkcstmToast("Bypass Logo Activated")
   end
 end
-
-
-
 
 
 local value = progress
@@ -1673,7 +1732,36 @@ snowb_seekbar.setOnSeekBarChangeListener{
 }
 
 
+-- [ 3. SNOWBOARD BOOST ADJUSTER (0-150) ]
+snowb_seekbarhigh.setOnSeekBarChangeListener{
+  onProgressChanged=function(view, progress, fromUser)
+    snowb_text1.setText("ꜱᴘᴇᴇᴅ ʙᴏᴏꜱᴛ (" .. progress .. "%)")
+  end,
 
+  onStopTrackingTouch=function(view)
+    local progress = view.getProgress()
+    -- adjustable value, iwas 0 para hindi mag-stock
+    local speedVal = (progress <= 0) and 1.0 or progress * 1.0
+    local hexValue = floatToHexLE(speedVal)
+
+    -- 1. Acceleration (Ito yung magpapatindi agad sa simula palang)
+    HexPatches.MemoryPatch("libunity.so", 0x52283FC, "h40 00 00 1C")
+    HexPatches.MemoryPatch("libunity.so", 0x52283FC + 4, "hC0 03 5F D6")
+    HexPatches.MemoryPatch("libunity.so", 0x52283FC + 8, hexValue, 4)
+
+    -- 3. Skis Max Speed (Dati mo nang gamit - para mataas ang limit)
+    HexPatches.MemoryPatch("libunity.so", 0x522860C, "h40 00 00 1C")
+    HexPatches.MemoryPatch("libunity.so", 0x522860C + 4, "hC0 03 5F D6")
+    HexPatches.MemoryPatch("libunity.so", 0x522860C + 8, hexValue, 4)
+
+    -- 4. Slope Max Speed (Dati mo nang gamit)
+    HexPatches.MemoryPatch("libunity.so", 0x52286DC, "h40 00 00 1C")
+    HexPatches.MemoryPatch("libunity.so", 0x52286DC + 4, "hC0 03 5F D6")
+    HexPatches.MemoryPatch("libunity.so", 0x52286DC + 8, hexValue, 4)
+
+    idkcstmToast("SNOWBOARD: " .. progress .. "% APPLIED")
+  end
+}
 
 -- [ SPEED HACK ADJUSTER (0.1 STEP - MAX 2.0x) ]
 speed_seekbar.setOnSeekBarChangeListener{
@@ -1772,9 +1860,9 @@ function wall.OnCheckedChangeListener()
   if wall.checked then
     HexPatches.MemoryPatch("libunity.so", 0x548A67C, "h1F 20 03 D5 E0 03 13 AA")
     idkcstmToast("WALLHACK: ACTIVATED")
-else
-      HexPatches.MemoryPatch("libunity.so", 0x548A67C, "h80 00 00 36")
-      idkcstmToast("WALLHACK: DEACTIVATED")
+   else
+    HexPatches.MemoryPatch("libunity.so", 0x548A67C, "h80 00 00 36")
+    idkcstmToast("WALLHACK: DEACTIVATED")
   end
 end
 
@@ -1784,7 +1872,7 @@ function wallred.OnCheckedChangeListener()
   if wallred.checked then
     HexPatches.MemoryPatch("libunity.so", 0x9677554, "h20 00 80 D2 C0 03 5F D6")
     idkcstmToast("WALLHACK RED: ACTIVATED")
-  else
+   else
     HexPatches.MemoryPatch("libunity.so", 0x9677554, "h00 00 80 D2 C0 03 5F D6")
   end
 end
@@ -1894,27 +1982,6 @@ function pump.OnCheckedChangeListener()
 end
 
 
-ultrafps.ButtonDrawable.setColorFilter(PorterDuffColorFilter(0x9AFFFFFF, PorterDuff.Mode.SRC_ATOP))
-function ultrafps.OnCheckedChangeListener()
-  if ultrafps.checked then
-    --  HexPatches.MemoryPatch("libunity.so", 0x6BAD1B4, "h20 00 80 D2 C0 03 5F D6") ---get_Enable180FrameRate
-    --  HexPatches.MemoryPatch("libunity.so", 0x6BAD870, "h20 00 80 D2 C0 03 5F D6") ---ShouldSupport180FrameRate
-    HexPatches.MemoryPatch("libunity.so", 0xA993C10, "h20 00 80 D2 C0 03 5F D6") ---GetFrameRateValue
-    --  HexPatches.MemoryPatch("libunity.so", 0x6BB1B4C, "h20 00 80 D2 C0 03 5F D6") ---GetExtraFrameRate
-    HexPatches.MemoryPatch("libunity.so", 0xA9921A4, "h20 00 80 D2 C0 03 5F D6") ---GetMaxSupportedFrameRateLevel
-    HexPatches.MemoryPatch("libunity.so", 0xA993644, "h20 00 80 D2 C0 03 5F D6") ---GetMaxSupportedFrameRateLevelForDevice
-    HexPatches.MemoryPatch("libunity.so", 0xA99219C, "h20 00 80 D2 C0 03 5F D6") ---get_IsUltraFrameRateCustomized
-    HexPatches.MemoryPatch("libunity.so", 0xA9A2DD8, "h00 24 80 D2 C0 03 5F D6") ---get_EnableVariableRateShading
-    HexPatches.MemoryPatch("libunity.so", 0xA9937A0, "h00 24 80 D2 C0 03 5F D6") ---get_UltraFrameRate
-    HexPatches.MemoryPatch("libunity.so", 0xA9937A8, "h00 24 80 D2 C0 03 5F D6") ---get_UltraFrameRateBR
-    HexPatches.MemoryPatch("libunity.so", 0xA993AA8, "h00 24 80 D2 C0 03 5F D6") ---get_FramerateCustomizeValue
-    idkcstmToast("UNLOCK FPS AND GRAPHICS: ACTIVATED")
-   else
-    -- Disable 180 FPS settings if the option is unchecked
-    -- You can add code here to allow re-enabling the other options if needed
-  end
-end
-
 
 import "main69"
 
@@ -1964,16 +2031,79 @@ end
 function applyExpiryCrashPatch()
   pcall(function()
     idkcstmToast("LICENSE EXPIRED: CLOSING GAME!")
-    
+
     -- 1. Crash via CurCamera (Null Pointer Reference Error)
     HexPatches.MemoryPatch("libunity.so", 0x663F840, "h00 00 80 D2 C0 03 5F D6")
-    
+
     -- 2. Crash via TickFPCameraFov (Invalid Instruction execution)
     HexPatches.MemoryPatch("libunity.so", 0x6642E9C, "h00 00 00 00")
-    
+
     -- 3. Crash via InitFPCameraFov
     HexPatches.MemoryPatch("libunity.so", 0x664260C, "h00 00 00 00")
   end)
 end
 
 import "video"
+
+-- ==========================================
+-- TAB MENU CLICK LISTENERS (FIX)
+-- ==========================================
+
+local function switchTab(selectedMenu)
+  -- Itago muna lahat ng menus
+  if menu1 then menu1.setVisibility(View.GONE) end
+  if menu4 then menu4.setVisibility(View.GONE) end
+  if menu3 then menu3.setVisibility(View.GONE) end
+  if menu6 then menu6.setVisibility(View.GONE) end
+  if menu7 then menu7.setVisibility(View.GONE) end
+
+  -- Ipakita ang piniling menu
+  if selectedMenu then
+    selectedMenu.setVisibility(View.VISIBLE)
+  end
+end
+
+-- 1. Bypass Tab
+if espmenu then
+  espmenu.onClick = function(v)
+    Waterdropanimation(espmenu, 50)
+    switchTab(menu1)
+    idkcstmToast("Bypass Menu")
+  end
+end
+
+-- 2. Graphics Tab
+if fpsmenu then
+  fpsmenu.onClick = function(v)
+    Waterdropanimation(fpsmenu, 50)
+    switchTab(menu4)
+    idkcstmToast("Seekbar Menu")
+  end
+end
+
+-- 3. Features Tab
+if othermenu then
+  othermenu.onClick = function(v)
+    Waterdropanimation(othermenu, 50)
+    switchTab(menu3)
+    idkcstmToast("Features Menu")
+  end
+end
+
+-- 4. Skins Tab
+if skinmenu then
+  skinmenu.onClick = function(v)
+    Waterdropanimation(skinmenu, 50)
+    switchTab(menu6)
+    idkcstmToast("Skins Menu")
+  end
+end
+
+-- 5. Settings Tab
+if antennamenu then
+  antennamenu.onClick = function(v)
+    Waterdropanimation(antennamenu, 50)
+    switchTab(menu7)
+    idkcstmToast("Settings Menu")
+  end
+end
